@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.0.RELEASE</version>
+    </parent>
+    <packaging>pom</packaging>
+    <groupId>com.cetc10.hjj</groupId>
+    <artifactId>hjj-task-manager</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <modules>
+        <module>hjj-task-api</module>
+        <module>hjj-task-bus</module>
+        <module>hjj-task-data</module>
+        <module>hjj-task-server</module>
+        <module>hjj-task-web</module>
+        <module>hjj-task-agent</module>
+        <module>hjj-task-test</module>
+    </modules>
+
+    <properties>
+        <admin.version>2.3.0</admin.version>
+        <druid.version>1.2.5</druid.version>
+        <mysql.connector.version>8.0.17</mysql.connector.version>
+        <mybatis.plus.version>3.2.0</mybatis.plus.version>
+        <fastjson.version>1.2.73</fastjson.version>
+        <swagger.version>1.9.1.RELEASE</swagger.version>
+        <sinux.version>1.0.0</sinux.version>
+
+        <spring-boot.admin.version>2.3.0</spring-boot.admin.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <springboot.actuator.version>2.3.0.RELEASE</springboot.actuator.version>
+        <sentinel.version>1.7.1</sentinel.version>
+        <pagehelper.version>1.2.3</pagehelper.version>
+        <reflections.version>0.9.10</reflections.version>
+        <nacos.version>1.2.1</nacos.version>
+        <clould.nacos.version>2.2.1.RELEASE</clould.nacos.version>
+        <kafkaclient.version>2.8.0</kafkaclient.version>
+    </properties>
+
+    <!--平台依种项目，子类指出即可-->
+    <dependencyManagement>
+        <dependencies>
+
+
+            <dependency>
+                <groupId>com.cetc10.hjj</groupId>
+                <artifactId>hjj-task-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.cetc10.hjj</groupId>
+                <artifactId>hjj-task-agent</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.cetc10.hjj</groupId>
+                <artifactId>hjj-task-data</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.cetc10.hjj</groupId>
+                <artifactId>hjj-task-bus</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.cetc10.hjj</groupId>
+                <artifactId>hjj-task-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.connector.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.fuzhutech/fuzhutech-ueditor -->
+            <dependency>
+                <groupId>com.fuzhutech</groupId>
+                <artifactId>fuzhutech-ueditor</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.jasonone.ueditor</groupId>
+                <artifactId>ueditor-spring-boot-starter</artifactId>
+                <version>1.2.2</version>
+            </dependency>
+
+
+            <!--这个是pagehlper 分页插件-->
+
+            <!-- pagehelper-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-core</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.spring4all</groupId>
+                <artifactId>swagger-spring-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-devtools</artifactId>-->
+<!--                <version>${spring-boot.version}</version>-->
+<!--                <scope>runtime</scope>-->
+<!--                <optional>true</optional>-->
+<!--            </dependency>-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-data-redis</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+                <version>2.6.3</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <!--    远座仓库-->
+    <!--    <repositories>-->
+    <!--    <repository>-->
+    <!--        <id>ysxt</id>-->
+    <!--        <name>ysxt</name>-->
+    <!--        <url>http://192.168.40.200:30847/repository/ysxt/</url>-->
+    <!--    </repository>-->
+    <!--    <repository>-->
+    <!--        <id>zwysxt</id>-->
+    <!--        <name>zwysxt</name>-->
+    <!--        <url>http://192.168.40.200:30847/repository/zwysxt/</url>-->
+    <!--    </repository>-->
+    <!--    </repositories>-->
+    <!--        <pluginRepositories>-->
+    <!--            <pluginRepository>-->
+    <!--                <id>ysxt</id>-->
+    <!--                <name>ysxt</name>-->
+    <!--                <url>http://192.168.40.200:30847/repository/ysxt/</url>-->
+    <!--            </pluginRepository>-->
+    <!--            <pluginRepository>-->
+    <!--                <id>zwysxt</id>-->
+    <!--                <name>zwysxt</name>-->
+    <!--                <url>http://192.168.40.200:30847/repository/zwysxt/</url>-->
+    <!--            </pluginRepository>-->
+    <!--        </pluginRepositories>-->
+    <!--    &lt;!&ndash;上傳地址&ndash;&gt;-->
+    <!--        <distributionManagement>-->
+    <!--            <repository>-->
+    <!--                <id>releases</id>-->
+    <!--                <name>Releases</name>-->
+    <!--                <url>http://192.168.40.200:30847/repository/ysxt/</url>-->
+    <!--            </repository>-->
+    <!--            &lt;!&ndash;項目内部快照版本&ndash;&gt;-->
+    <!--            <snapshotRepository>-->
+    <!--                <id>snapshots</id>-->
+    <!--                <name>Snapshots</name>-->
+    <!--                <url>http://192.168.40.200:30847/repository/ysxt</url>-->
+    <!--            </snapshotRepository>-->
+    <!--        </distributionManagement>-->
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.3.0.RELEASE</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

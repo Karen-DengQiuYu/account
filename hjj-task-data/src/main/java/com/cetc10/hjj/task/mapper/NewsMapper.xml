@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cetc10.hjj.task.mapper.NewsMapper">
+    <select id="newsListAllByKw"  resultType="com.cetc10.hjj.task.entity.News">
+        select * from news
+        <where>
+            <if test="keyword != null and keyword != ''">
+                <bind name="keyword" value="'%'+keyword+'%'"/>
+                title like #{keyword}
+            </if>
+        </where>
+        order by date desc
+    </select>
+</mapper>

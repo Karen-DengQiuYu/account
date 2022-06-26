@@ -1,0 +1,9 @@
+#添加到nacos public分区 agent文件 格式yaml
+heart:
+  #心跳链接频率
+  timeout: 5000
+  master:
+    port: 30000
+    server-name: hjj-task-manager
+  #心跳链接 1走云 2走调试
+  type: 1

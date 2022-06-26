@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!--左侧导航-->
+        <aside class="lyear-layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <a href="index.html"><img src="images/logo-sidebar.png" title="LightYear" alt="LightYear"/></a>
+            </div>
+            <div class="lyear-layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer"></ul>
+
+                </nav>
+
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="lyear-layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="lyear-aside-toggler">
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                        </div>
+                        <span class="navbar-page-title"> 后台首页 </span>
+                    </div>
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown" id="topUsername">
+
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="http://127.0.0.1:8090/login"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+        <!--页面主要内容-->
+        <main class="lyear-layout-content">
+            <div class="container-fluid">
+                <ul class="nav nav-tabs page-tabs">
+                    <li><a href="newsMana.html">列表</a></li>
+                    <li class="active"><a href="#!">添加</a></li>
+
+                </ul>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="#!" class="row">
+
+                                <div class="form-group col-md-12">
+                                    <label for="title">标题</label>
+                                    <input type="text" class="form-control" id="title" name="title" value="" placeholder="请输入标题" />
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label>内容</label>
+                                    <script id="editor" type="text/plain"></script>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <button type="submit" id="coachForm" class="btn btn-primary ajax-post" target-form="add-form">确 定</button>
+                                    <button type="button" class="btn btn-default" onclick="javascript:history.back(-1);return false;">返 回</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!--End 页面主要内容-->
+    </div>
+
+</div>
+
+<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+<!--标签插件-->
+<script src="js/jquery-tags-input/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+<script src="config.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    var ue = UE.getEditor('editor',{
+        initialFrameHeight:500,
+        initialFrameWidth:1100
+    });
+
+    $.Func =function () {
+        //url
+        $.ajax({
+            type: 'GET',    // 指定请求方式（大小写均可）
+            url: host+ '/url/findUrl', // URL地址
+            success: function (res) {
+                $(".nav-drawer").empty();// 清空
+                // <li> <a href="lyear_ui_buttons.html">按钮</a> </li>
+                console.log(res);  // 回调函数
+                for (var i = 0; i < res.length; i++) {
+                    var li_str = '<li> <a href='+res[i].url+'>'+res[i].name+'</a> </li>';
+                    console.log(li_str);
+                    $(".nav-drawer").append(li_str);
+                }
+            }
+        })
+    };
+    $.Func();
+
+    //添加新闻
+    $("#coachForm").click(function () {
+        var title = $("#title").val();
+        var content = ue.getContent();
+        console.log("-----------------"+content);
+        $.ajax({
+            url: host + '/news/add', // URL地址
+            type: 'post',
+            data: {
+                'title': title,
+                'content': content
+            },
+            dataType: 'json',
+        });
+
+    });
+
+    //用户名
+    $.userFunc = function () {
+        $.ajax({
+            type: 'GET',    // 指定请求方式（大小写均可）
+            url: host + '/getSession', // URL地址
+            success: function (res) {
+                console.log(res)
+                $("#topUsername").empty()// 清空
+                var span = '<span >' + res.username + '<span class="caret"></span></span>'
+                $("#topUsername").append(span);
+            }
+        });
+    };
+    $.userFunc();
+
+
+</script>
+</body>
+</html>

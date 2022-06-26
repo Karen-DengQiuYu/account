@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/materialdesignicons.min.css" rel="stylesheet">
+<link href="css/style.min.css" rel="stylesheet">
+</head>
+  
+<body>
+<div class="lyear-layout-web">
+  <div class="lyear-layout-container">
+    <!--左侧导航-->
+    <aside class="lyear-layout-sidebar">
+      
+      <!-- logo -->
+      <div id="logo" class="sidebar-header">
+        <a href="index.html"><img src="images/logo-sidebar.png" title="LightYear" alt="LightYear" /></a>
+      </div>
+      <div class="lyear-layout-sidebar-scroll"> 
+        
+        <nav class="sidebar-main">
+          <ul class="nav nav-drawer" >
+
+<!--            <li class="nav-item active"> <a href="index.html"><i class="mdi mdi-home"></i> 后台首页</a> </li>-->
+
+          </ul>
+        </nav>
+
+      </div>
+      
+    </aside>
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    <header class="lyear-layout-header">
+      
+      <nav class="navbar navbar-default">
+        <div class="topbar">
+          
+          <div class="topbar-left">
+            <div class="lyear-aside-toggler">
+              <span class="lyear-toggler-bar"></span>
+              <span class="lyear-toggler-bar"></span>
+              <span class="lyear-toggler-bar"></span>
+            </div>
+            <span class="navbar-page-title"> 权限管理 </span>
+          </div>
+
+          <ul class="topbar-right">
+            <li class="dropdown dropdown-profile">
+              <a href="javascript:void(0)" data-toggle="dropdown" id="topUsername">
+
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+
+              </ul>
+            </li>
+          </ul>
+          
+        </div>
+      </nav>
+      
+    </header>
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="lyear-layout-content">
+      
+      <div class="container-fluid">
+        
+        <div class="row">
+          <div class="col-sm-6 col-lg-4">
+            <div class="card bg-primary">
+              <div class="card-body clearfix">
+                <div class="pull-right">
+                  <p class="h6 text-white m-t-0">今日支出</p>
+                  <p class="h3 text-white m-b-0" id="todayPay"></p>
+                </div>
+                <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-currency-cny fa-1-5x"></i></span> </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-sm-6 col-lg-4">
+            <div class="card bg-danger">
+              <div class="card-body clearfix">
+                <div class="pull-right">
+                  <p class="h6 text-white m-t-0">今日收入</p>
+                  <p class="h3 text-white m-b-0" id="todaySave"></p>
+                </div>
+                <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-arrow-down-bold fa-1-5x"></i></span> </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-4">
+            <div class="card bg-success">
+              <div class="card-body clearfix">
+                <div class="pull-right">
+                  <p class="h6 text-white m-t-0">今日记录</p>
+                  <p class="h3 text-white m-b-0" id="todayLog"></p>
+                </div>
+                <div class="pull-left"> <span class="img-avatar img-avatar-48 bg-translucent"><i class="mdi mdi-comment-outline fa-1-5x"></i></span> </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="row">
+          
+          <div class="col-lg-6"> 
+            <div class="card">
+              <div class="card-header">
+                <h4>本周支出</h4>
+              </div>
+              <div class="card-body">
+                <canvas class="js-chartjs-bars"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-6"> 
+            <div class="card">
+              <div class="card-header">
+                <h4>本周收入</h4>
+              </div>
+              <div class="card-body">
+                <canvas class="js-chartjs-lines"></canvas>
+              </div>
+            </div>
+          </div>
+           
+        </div>
+
+        
+      </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+
+<!--图表插件-->
+<script type="text/javascript" src="js/Chart.js"></script>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript">
+  //用户名
+  $.userFunc = function () {
+    $.ajax({
+      type: 'GET',    // 指定请求方式（大小写均可）
+      url: host + '/getSession', // URL地址
+      success: function (res) {
+        console.log(res)
+        $("#topUsername").empty()// 清空
+        var span = '<span >' + res.username + '<span class="caret"></span></span>'
+        $("#topUsername").append(span);
+      }
+    });
+  };
+  $.userFunc();
+  $(function () {
+    $.ajax({
+      type: 'GET',    // 指定请求方式（大小写均可）
+      url: host+'/incomeEcharts/payAccountByToday', // URL地址
+      success: function (res) {   // 回调函数
+        $("#todayPay").text(res);
+      }
+    })
+
+    $.ajax({
+      type: 'GET',    // 指定请求方式（大小写均可）
+      url: host+ '/incomeEcharts/saveAccountByToday', // URL地址
+      success: function (res) {   // 回调函数
+        $("#todaySave").text(res);
+      }
+    })
+
+    $.ajax({
+      type: 'GET',    // 指定请求方式（大小写均可）
+      url: host+ '/incomeEcharts/logNumToday', // URL地址
+      success: function (res) {   // 回调函数
+        $("#todayLog").text(res);
+      }
+    })
+
+    $.ajax({
+      type: 'GET',    // 指定请求方式（大小写均可）
+      url: host+ '/incomeEcharts/payAccountByWeek', // URL地址
+      success: function (res) {   // 回调函数
+        var keyListByPay = new Array();
+        var valueListByPay = new Array();
+        $.each(res, function (key, values) {
+          keyListByPay.push(key);
+          valueListByPay.push(values);
+        });
+        var $dashChartBarsCnt  = jQuery( '.js-chartjs-bars' )[0].getContext( '2d' );
+        var $dashChartBarsData = {
+          labels: keyListByPay,
+          datasets: [
+            {
+              label: '本周支出',
+              borderWidth: 1,
+              borderColor: 'rgba(0,0,0,0)',
+              backgroundColor: 'rgba(51,202,185,0.5)',
+              hoverBackgroundColor: "rgba(51,202,185,0.7)",
+              hoverBorderColor: "rgba(0,0,0,0)",
+              data: valueListByPay
+            }
+          ]
+        };
+        new Chart($dashChartBarsCnt, {
+          type: 'bar',
+          data: $dashChartBarsData
+        });
+      }
+    })
+
+    $.ajax({
+      type: 'GET',    // 指定请求方式（大小写均可）
+      url: host+ '/incomeEcharts/saveAccountByWeek', // URL地址
+      success: function (res) {
+        var keyListBySave = new Array();
+        var valueListBySave = new Array();// 回调函数
+        $.each(res, function (key, values) {
+          keyListBySave.push(key);
+          valueListBySave.push(values);
+        });
+        var $dashChartLinesCnt = jQuery( '.js-chartjs-lines' )[0].getContext( '2d' );
+        var $dashChartLinesData = {
+          labels: keyListBySave,
+          datasets: [
+            {
+              label: '本周收入',
+              data: valueListBySave,
+              borderColor: '#ff6384',
+              backgroundColor: 'rgba(255, 63, 84, 0.175)',
+              borderWidth: 1,
+              fill: false,
+              lineTension: 0.5
+            }
+          ]
+        };
+        new Chart($dashChartLinesCnt, {
+          type: 'line',
+          data: $dashChartLinesData
+        });
+      }
+    })
+  //url
+    $.ajax({
+      type: 'GET',    // 指定请求方式（大小写均可）
+      url: host+ '/url/findUrl', // URL地址
+      success: function (res) {
+      // <li> <a href="lyear_ui_buttons.html">按钮</a> </li>
+        console.log(res);  // 回调函数
+        for (var i = 0; i < res.length; i++) {
+          var li_str = '<li> <a href='+res[i].url+'>'+res[i].name+'</a> </li>';
+          console.log(li_str);
+          $(".nav-drawer").append(li_str);
+        }
+        console.log($(".nav-drawer"));
+      }
+    })
+  });
+</script>
+</body>
+</html>
