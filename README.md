@@ -1,6 +1,18 @@
 # 记账系统
 
-功能实现
+## about
+
+个人记账系统采取了Maven+SpringBoot+SpringSecurity+Echarts技术进行开发，该系统能够记录当前的收入和支出，并显示相应的图表。还能设置消费预警，记录个人税务，记录个人理财产品等。本文提到的系统主要是Web端，使用Web端操作起来更加便捷，有导航条的设置可以快速的点击进入所需要的页面。
+
+## 环境
+
+- 数据库：MySQL5.5.29。
+- 浏览器：Google Chrome。
+- Java-Version：jdk1.8.0_131。
+- SpringBoot-Version：2.3.0.RELEASE。
+-  MybatisPlus-version：3.2.0。
+
+## 功能实现
 
 4.4.1 查看账单
 
